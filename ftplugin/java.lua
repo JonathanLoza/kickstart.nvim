@@ -20,6 +20,12 @@ local function get_config_dir()
   end
 end
 
+--local bundles = {
+--	vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-debug-adapter/com.microsoft.java.debug.plugin.jar"),
+--}
+
+--vim.list_extend(bundles, vim.split(vim.fn.glob(home .. "/.local/share/nvim/mason/share/java-test/*.jar", 1), "\n"))
+
 -- See `:help vim.lsp.start_client` for an overview of the supported `config` options.
 local config = {
   --capabilities = capabilities,
@@ -44,11 +50,26 @@ local config = {
     '-data',
     vim.fn.expand '~/.cache/jdtls-workspace/' .. workspace_dir,
   },
-  settings = {},
+  settings = {
+        java = {
+            configuration = {
+                runtimes = {
+                    {
+                        name = "JavaSE-1.8",
+                        path = "/usr/lib/jvm/java-8-openjdk/"
+                    },
+                    {
+                        name = "JavaSE-17",
+                        path = "/usr/lib/jvm/java-17-openjdk/"
+                    }
+                }
+            }
+        }
+    },
   root_dir = vim.fs.dirname(vim.fs.find({ 'pom.xml', '.git' }, { upward = true })[1]),
   init_options = {
-    -- https://github.com/eclipse/eclipse.jdt.ls/wiki/Language-Server-Settings-&-Capabilities#extended-client-capabilities
-    extendedClientCapabilities = jdtls.extendedClientCapabilities,
+        extendedClientCapabilities = jdtls.extendedClientCapabilities,
+        --bundles = bundles,
   },
   on_attach = function(client, bufnr)
     -- https://github.com/mfussenegger/dotfiles/blob/833d634251ebf3bf7e9899ed06ac710735d392da/vim/.config/nvim/ftplugin/java.lua#L88-L94
