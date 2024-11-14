@@ -632,6 +632,10 @@ require('lazy').setup({
         -- ts_ls = {},
         --
 
+        groovyls = {
+          cmd = {"java", "-jar", "/home/jonathan/.local/share/nvim/mason/packages/groovy-language-server/build/libs/groovy-language-server-all.jar"},
+          filetypes = { "groovy" }
+        },
         jdtls = {},
         lua_ls = {
           -- cmd = {...},
